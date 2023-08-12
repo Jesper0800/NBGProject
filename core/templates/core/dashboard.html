@@ -1,0 +1,34 @@
+{% extends 'template/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="py-8 px-8 justify-between bg-orange-200">
+    <h1 class="text-xl mb-6">Dashboard</h1>
+
+    <div class="flex space-x-8">
+        <div class="w-1/2 px-4 py-3 bg-gray-300 text-center rounded-xl leads">
+            <h2 class="text-lg text-left mb-4 bg-orange-200">Nieuwste leads</h3>
+
+            {% for lead in leads %}
+            <div class="lead">
+                <h3 class="font-semibold mb-2">{{lead.name}}</h3>
+
+                <a href="{% url 'lead_detail' lead.pk %}" class="text-left text-xs">Details</a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="w-1/2 px-4 py-3 bg-gray-300 text-center rounded-xl clients">
+            <h2 class="text-lg text-left mb-4">Nieuwste klanten</h2>
+
+            {% for client in clients %}
+            <div class="client">
+                <h3 class="font-semibold mb-2">{{client.name}}</h3>
+
+                <a href="{% url 'clients_detail' client.pk %}" class="text-left text-xs">Details</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'template/base.html' %}
+
+{% block title %}Clients{% endblock %}
+
+{% block content %}
+    <div class="py-8 px-8 bg-orange-100">
+
+        <a href="{% url 'clients_add' %}" class="inline-block px-6 py-4 bg-orange-500 rounded-xl text-white font-bold" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">Add New Client</a>
+        <a href="{% url 'export' %}" class="inline-block px-6 py-4 bg-orange-500 rounded-xl text-white font-bold" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">Export to CSV</a>
+        
+        <form method="get">
+            {{myFilter.form}}
+
+        <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+
+        {% if object_list %}
+            <div class="mt-6 flex justify-between">
+                <p class="py-4 px-2 bg-gray-200 font-bold w-full bg-orange-500 text-white font-bold">Name</p>
+                <p class="py-4 px-2 bg-gray-200 font-bold w-full bg-orange-500 text-white font-bold">Woon Plaats</p>
+                <p class="py-4 px-2 bg-gray-200 font-bold w-full bg-orange-500 text-white font-bold">Address 1</p>
+                <p class="py-4 px-2 bg-gray-200 font-bold w-full bg-orange-500 text-white font-bold">Pakket</p>
+                <p class="py-4 px-2 bg-gray-200 font-bold w-full bg-orange-500 text-white font-bold">Telefoon Nummer</p>
+                <p class="py-4 px-2 bg-gray-200 font-bold w-full bg-orange-500 text-white font-bold">KVK</p>
+                <p class="py-4 px-2 bg-gray-200 font-bold w-full bg-orange-500 text-white font-bold">Belasting Nummer</p>
+            </div>
+            {% for client in object_list %}
+                <div class="flex justify-between">
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">
+                        <a href= "{% url 'clients_detail' client.id %}">{{ client.name }}</a>
+                    </p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ client.woon_plaats }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ client.address_1 }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ client.pakket }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ client.telefoon_nummer }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ client.kvk }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ client.belasting_nummer }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="mb-4 mt-6 py-6 text-xl text-center">No clients yet....</p>
+        {% endif %}
+    </div>
+    {% endblock %}

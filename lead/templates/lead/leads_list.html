@@ -1,0 +1,38 @@
+{% extends 'template/base.html' %}
+
+{% block title %}Leads{% endblock %}
+
+{% block content %}
+    <div class="py-8 px-8 bg-orange-100">
+
+        <a href="{% url 'add_lead' %}" class="inline-block px-6 py-4 bg-orange-500 rounded-xl text-white text-xl" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">Add Lead</a>
+            {% if leads %}
+            <div class="mt-6 flex justify-between">
+                <p class="py-4 px-2 bg-orange-500 font-bold w-full text-white">Name</p>
+                <p class="py-4 px-2 bg-orange-500 font-bold w-full text-white">Priority</p>
+                <p class="py-4 px-2 bg-orange-500 font-bold w-full text-white">Status</p>
+                <p class="py-4 px-2 bg-orange-500 font-bold w-full text-white">Adress</p>
+                <p class="py-4 px-2 bg-orange-500 font-bold w-full text-white">Telefoon Nummer</p>
+                <p class="py-4 px-2 bg-orange-500 font-bold w-full text-white">Woon Plaats</p>
+                <p class="py-4 px-2 bg-orange-500 font-bold w-full text-white">KVK</p>
+                <p class="py-4 px-2 bg-orange-500 font-bold w-full text-white">Belasting Nummer</p>
+            </div>
+            {% for lead in leads %}
+                <div class="flex justify-between">
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">
+                        <a href= "{% url 'lead_detail' lead.id %}">{{ lead.name }}</a>
+                    </p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ lead.get_priority_display }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ lead.get_status_display }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ lead.address_1 }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ lead.telefoon_nummer }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ lead.woon_plaats }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ lead.kvk }}</p>
+                    <p class="py-2 px-2 w-full font-semibold {% cycle 'bg-orange-200' '' %}">{{ lead.belasting_nummer }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="mb-4 mt-6 py-6 text-xl text-center">No leads yet....</p>
+        {% endif %}
+    </div>
+    {% endblock %}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <nav class="py-6 px-6 flex justify-between bg-orange-500">
+            <a href="/" class="text-white">Nationale Bedrijfs Gids</a>
+
+            <div class="space-x-4">
+                <a href="{% url 'about' %}" class="px-6 py-3 bg-orange-500 rounded-xl text-white font-bold" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">About</a>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="px-6 py-4 bg-orange-500 rounded-xl text-white font-bold" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">Dashboard</a>
+                    <a href="{% url 'leads_list' %}" class="px-6 py-4 bg-orange-500 rounded-xl text-white font-bold" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">Leads</a>
+                    <a href="{% url 'clients_list' %}" class="px-6 py-4 bg-orange-500 rounded-xl text-white font-bold" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">Clients</a>
+                    <a href="{% url 'logout' %}" class="px-6 py-4 bg-red-400 rounded-xl text-white font-bold" onmouseover="this.style.background='red';" onmouseout="this.style.background='';">Log out</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="px-6 py-4 bg-teal-600 rounded-xl text-white font-bold"> Log in</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        {% if messages %}
+            <div class="py-6 px-6">
+                {% for message in messages %}
+                <div class="py-4 px-4 bg-teal-300 text-gray-700 rounded-xl">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+        <footer class="py-8 text-center bg-orange-500 py-6">
+            <p class="text-xs text-white">Copyright (c) 2023 - Nationale Bedrijfs Gids</p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,147 @@
+{% extends 'template/base.html' %}
+
+{% block title %}{{ client.name }}{% endblock %}
+
+{% block content %}
+    <div class="py-8 px-8 bg-orange-200">
+        <h1 class="mb-4 text-3xl">{{ client.name }}</h1>
+
+        {% if lead.description %}
+            <p class="font-semibold">Name</p>
+            <p class="mb-2 bg-orange-100">{{ client.description }}</p>
+        {% endif %}
+
+        <div class="py-8 px-8 column-1 inline-block width-50%">
+            <h4 class="mb-4 text-xl font-semibold">Algemene Informatie</h4>
+
+            <p class="font-semibold bg-orange-100">Gecreërd op</p>
+            <p class="mb-6 bg-orange-100">{{ client.created_at }}</p>
+
+            <p class="font-semibold bg-orange-100">Laatst Bewerkt</p>
+            <p class="mb-6 bg-orange-100">{{ client.modified_at }}</p>
+
+            <p class="font-semibold bg-orange-100">Pakket</p>
+            <p class="mb-6 bg-orange-100">{{ client.pakket }}</p>
+
+            <p class="font-semibold bg-orange-100">Gemaakt Door</p>
+            <p class="mb-6 bg-orange-100">{{ client.created_by }}</p>
+        </div>
+
+        <div class="py-8 px-8 column-2 inline-block width-50%">
+
+            <p class="font-semibold bg-orange-100">Status</p>
+            <p class="mb-6 bg-orange-100">{{ client.status }}</p>
+
+            <p class="font-semibold bg-orange-100">Contact Datum 1</p>
+            <p class="mb-6 bg-orange-100">{{ client.contact_datum_1 }}</p>
+
+            <p class="font-semibold bg-orange-100">Contact Datum 2</p>
+            <p class="mb-6 bg-orange-100">{{ client.contact_datum_2 }}</p>
+
+            <p class="font-semibold bg-orange-100">Contact Datum 3</p>
+            <p class="mb-6 bg-orange-100">{{ client.contact_datum_3 }}</p>
+        </div>
+
+        <div class="py-8 px-8 column-1 inline-block width-50%">
+            <h4 class="mb-4 text-xl font-semibold">Bedrijfs Informatie</h4>
+
+            <p class="font-semibold bg-orange-100">Email</p>
+            <p class="mb-6 bg-orange-100">{{ client.contact_persoon_email }}</p>
+
+            <p class="font-semibold bg-orange-100">Woon Plaats</p>
+            <p class="mb-6 bg-orange-100">{{ client.woon_plaats }}</p>
+
+            <p class="font-semibold bg-orange-100">Telefoon Nummer</p>
+            <p class="mb-6 bg-orange-100">{{ client.telefoon_nummer }}</p>
+
+            <p class="font-semibold bg-orange-100">Firma Type</p>
+            <p class="mb-6 bg-orange-100">{{ client.firma_type }}</p>
+        </div>
+
+        <div class="py-8 px-8 column-2 inline-block width-50%">
+            <h4 class="mb-4">`</h4>
+
+            <p class="font-semibold bg-orange-100">Contact Persoon</p>
+            <p class="mb-6 bg-orange-100">{{ client.contact_persoon }}</p>
+
+            <p class="font-semibold bg-orange-100">Address</p>
+            <p class="mb-6 bg-orange-100">{{ client.address_1 }}</p>
+
+            <p class="font-semibold bg-orange-100">Kvk</p>
+            <p class="mb-6 bg-orange-100">{{ client.kvk }}</p>
+
+            <p class="font-semibold bg-orange-100">Belasting Nummer</p>
+            <p class="mb-6 bg-orange-100">{{ client.belasting_nummer }}</p>
+        </div>
+
+        <div class="py-8 px-8 column-3 inline-block width-50%">
+            <h4 class="mb-4">`</h4>
+
+            <p class="font-semibold bg-orange-100">Vak Gebied</p>
+            <p class="mb-6 bg-orange-100">{{ client.vak_gebied }}</p>
+
+            <p class="font-semibold bg-orange-100">Address 2</p>
+            <p class="mb-6 bg-orange-100">{{ client.address_2 }}</p>
+
+            <p class="font-semibold bg-orange-100">Address 3</p>
+            <p class="mb-6 bg-orange-100">{{ client.address_3 }}</p>
+
+            <p class="font-semibold bg-orange-100">Description</p>
+            <p class="mb-6 bg-orange-100">{{ client.description }}</p>
+        </div>
+
+
+        <hr class="my-4">
+
+        <form id="client_delete_form" method="post" action="{% url 'clients_delete' client.id %}">
+            {% csrf_token %}
+        </form>
+
+        <a href="{% url 'clients_edit' client.id %}" class="py-2 px-2 rounded-xl text-white bg-teal-500">Edit</a>
+        <a href="#" onclick="document.getElementById('client_delete_form').submit();" class="py-2 px-2 rounded-xl text-white bg-red-600">Delete</a>
+
+        <hr class="my-4">
+
+        <h3 class="text-2xl font-bold py-4">Files</h2>
+
+        <div class="space-y-4">
+            {% for file in client.files.all %}
+                <div class="bg-gray-100 py-6 rounded-xl bg-orange-100">
+                    <p class="mb-2"><strong>{{ file.created_by }}<strong> @ {{ file.created_at }}</p>
+
+                    <a href="{{ file.file.url }}">Download</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="post" action="{% url 'add_file' client.id %}" enctype="multipart/form-data" class="my-4">
+            {% csrf_token %}
+
+            {{ fileform.as_p }}
+
+            <button class="my-4 py-2 px-4 bg-orange-500 rounded-xl text-white font-bold" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">Submit</button>
+        </form>
+
+        <hr class="my-4 justify-between">
+
+        <h3 class="text-2xl py-4">Comments</h3>
+
+        <div class="space-y-4">
+            {% for comment in client.comments.all %}
+            <div class="bg-gray-100 p-6 rounded-xl bg-orange-100">
+                {{ comment.content }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <form method="post" action="{% url 'add_comment' client.id %}" class="my-4">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+            <button class="py-2 px-4 bg-orange-500 rounded-xl text-white font-bold my-4" onmouseover="this.style.background='teal';" onmouseout="this.style.background='';">Submit</button>
+            <a href="{% url 'clients_list' %}" class="py-2 px-4 rounded-xl text-white mx-8 bg-red-600 text-right">Back</a>
+        </form>
+
+        <hr class="my-4 justify-between">
+
+{% endblock %}

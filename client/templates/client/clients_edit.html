@@ -1,0 +1,35 @@
+{% extends 'template/base.html' %}
+
+{% block title %}Bewerk Klant{% endblock %}
+
+{% block content %}
+<div class="py-6 px-6 bg-orange-200">
+    <h1 class="text-xl">Bewerk Klant</h1>
+
+    <form method="post" action=".">
+        <div class="column-1 text-left inline-block width-50%">
+            <p>Naam</p>
+            {{ form.name }}
+            <p>Telefoon Nummer</p>
+            {{ form.telefoon_nummer }}
+            <p>Pakket</p> 
+            {{ form.pakket }}
+            <p>Status</p>
+            {{ form.status }}       
+         </div>
+         <div class="column-2 text-center inline-block width-50%"> 
+            <p>Woon Plaats</p>
+            {{ form.woon_plaats}}
+            <p>Adress 1</p>
+            {{ form.address_1 }}
+            <p>Contact Persoon</p>
+            {{ form.contact_persoon }}
+            <p>Adress 1</p>
+            {{ form.address_1 }}
+            </div>
+
+        <button class="py-4 px-8 bg-teal-500 text-white rounded-xl">Submit</button>
+
+    </form>
+</div>
+{% endblock %}
